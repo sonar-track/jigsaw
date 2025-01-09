@@ -5,4 +5,4 @@ docker run --name $1 --init --rm -it \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v /home/dp/dev:/home/trainer/dev \
     --gpus all \
-    eyenav/eyenav-ml:py38-tf-gpu bash
+    sonar/sonar-ml:py38-tf-gpu bash

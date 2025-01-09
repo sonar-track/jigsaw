@@ -37,8 +37,16 @@ def random_crop_and_resize_patch_from_image(
     ''' Randomly pick patch center wrt pdf of X and Y axes such that cropped patch
         always is unlikely to be an empty patch, but contains textures of different sorts.
 
-        Return:
-         A single patch of tf.Tensor type
+        Args:
+            image: tf.Tensor, the input image.
+            patch_width: int, the width of the patch.
+            patch_height: int, the height of the patch.
+            crop_range: typing.List[float], the range of crop sizes.
+            contrast_range: typing.List[float], the range of contrast values.
+            brightness_delta: float, the maximum brightness delta.
+
+        Returns:
+            tf.Tensor, a single patch of the input image.
     '''
     crop_height = tf.random.uniform(shape=(), minval=int(patch_height * crop_range[0]), maxval=int(patch_height * crop_range[1]), dtype=tf.int32)
     crop_width = tf.random.uniform(shape=(), minval=int(patch_width * crop_range[0]), maxval=int(patch_width * crop_range[1]), dtype=tf.int32)
@@ -79,7 +87,7 @@ def scramble_patch_to_puzzle(
     ) -> tf.Tensor:
     ''' From a given patch, partitioning it to ncells_x * ncells_y blocks and shuffle
         the blocks wrt puzzle_pattern, then return the puzzled patch
-     '''
+    '''
     puzzle_patterns = tf.convert_to_tensor(puzzle_patterns)
     patch = tf.cond(tf.equal(tf.rank(patch), 2), 
                     lambda: tf.expand_dims(patch, axis=-1), 
@@ -123,9 +131,33 @@ def build_data_pipeline(
         seed: int=None,
         subset: str=None,
     ) -> tf.data.Dataset:
-    ''' Create a iterable dataset of sonar image patches
-        randomly cropped from (randomly) picked sonar snapshots 
-        of a given dataset directory
+    ''' Creates an iterable dataset of sonar image patches.
+
+    This function generates a dataset of sonar image patches by randomly cropping 
+    patches from randomly picked sonar snapshots in a given dataset directory.
+
+    Args:
+    - sonar_images_directory (str): The directory containing the sonar image dataset.
+    - puzzle_patterns (typing.List[typing.List[int]]): A list of puzzle patterns.
+    - ncells_x (int): The number of cells in the x-direction of the puzzle.
+    - ncells_y (int): The number of cells in the y-direction of the puzzle.
+    - train_val_split (float): The proportion of the dataset to use for training.
+    - color_mode (str): The color mode of the images.
+    - batch_size (int): The batch size of the dataset.
+    - image_width (int): The width of the images.
+    - image_height (int): The height of the images.
+    - patch_width (int): The width of the patches.
+    - crop_range (typing.List[float]): The range of crop sizes.
+    - contrast_range (typing.List[float]): The range of contrast values.
+    - brightness_delta (float): The delta value for brightness adjustment.
+    - epochs (int): The number of epochs.
+    - patch_height (int): The height of the patches.
+    - shuffle (bool): Whether to shuffle the dataset.
+    - seed (int): The seed for random operations.
+    - subset (str): The subset of the dataset to use.
+
+    Returns:
+    - tf.data.Dataset: The created dataset.
     '''
     dataset = keras.utils.image_dataset_from_directory(
         sonar_images_directory,

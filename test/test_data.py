@@ -7,7 +7,7 @@ class TestData(unittest.TestCase):
 
     def test_randomize_patterns(self):
 
-        from eyenav.jigsaw_training.data import randomize_permutation_patterns
+        from sonar.jigsaw_training.data import randomize_permutation_patterns
 
         patterns = randomize_permutation_patterns(4)
         self.assertTrue((3, 1, 2, 0) in patterns)
@@ -18,7 +18,7 @@ class TestData(unittest.TestCase):
 
     def test_random_crop(self):
         
-        from eyenav.jigsaw_training.data import random_crop_patch_from_image
+        from sonar.jigsaw_training.data import random_crop_patch_from_image
 
         random_image = np.random.rand(1024, 512)
         random_image = tf.convert_to_tensor(random_image, tf.float32)
@@ -28,7 +28,7 @@ class TestData(unittest.TestCase):
 
     def test_puzzle(self):
 
-        from eyenav.jigsaw_training.data import scramble_patch_to_puzzle, randomize_permutation_patterns
+        from sonar.jigsaw_training.data import scramble_patch_to_puzzle, randomize_permutation_patterns
 
         patch = tf.random.uniform((96, 96, 3), dtype=tf.float32)
         num_patterns = 10
@@ -41,7 +41,7 @@ class TestData(unittest.TestCase):
 
         image_dir = '../datasets/uatd/train'
 
-        from eyenav.jigsaw_training.data import build_data_pipeline, randomize_permutation_patterns
+        from sonar.jigsaw_training.data import build_data_pipeline, randomize_permutation_patterns
 
         num_patterns = 10
         puzzle_patterns = randomize_permutation_patterns(9, num_patterns)

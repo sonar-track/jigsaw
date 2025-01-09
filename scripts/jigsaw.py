@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import argparse, yaml, os, json
-from eyenav.jigsaw_training import get_default_configs
-from eyenav.jigsaw_training.utils import scaffold_directory_structure, logger
-from eyenav.jigsaw_training.utils import EXPERIMENT_TAG, TRAIN_TAG, DATASET_TAG, EVALUATION_TAG, INFERENCE_TAG, CHECKPOINT_TAG, LOG_TAG
-from eyenav.jigsaw_training import train
+from sonar.jigsaw_training import get_default_configs
+from sonar.jigsaw_training.utils import scaffold_directory_structure, logger
+from sonar.jigsaw_training.utils import EXPERIMENT_TAG, TRAIN_TAG, DATASET_TAG, EVALUATION_TAG, INFERENCE_TAG, CHECKPOINT_TAG, LOG_TAG
+from sonar.jigsaw_training import train
 
 
 def add_arguments_from_dict(

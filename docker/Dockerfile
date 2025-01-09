@@ -2,7 +2,7 @@ FROM nvcr.io/nvidia/tensorflow:24.03-tf2-py3
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER_ID
 ARG GROUP_ID
-LABEL AUTHOR Phong Vo <phong.dinhvo@winnowsolutions.com>
+LABEL AUTHOR Phong Vo <phong.vodinh@gmail.com>
 #RUN  sudo apt-key del 7fa2af80
 RUN  apt update && apt install -y wget vim curl s3cmd ffmpeg build-essential locales fonts-powerline ffmpeg python3-tk firefox libturbojpeg apt-utils
 # locales modules

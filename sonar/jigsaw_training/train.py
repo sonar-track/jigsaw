@@ -1,10 +1,10 @@
 import os, keras, typing
 
-from eyenav.jigsaw.model import create_jigsaw_classifier
-from eyenav.jigsaw.model import create_feature_extractor
-from eyenav.jigsaw_training.data import build_data_pipeline
-from eyenav.jigsaw_training.data import randomize_permutation_patterns
-from eyenav.jigsaw_training.utils import logger
+from sonar.jigsaw.model import create_jigsaw_classifier
+from sonar.jigsaw.model import create_feature_extractor
+from sonar.jigsaw_training.data import build_data_pipeline
+from sonar.jigsaw_training.data import randomize_permutation_patterns
+from sonar.jigsaw_training.utils import logger
 
 
 def train(
@@ -35,6 +35,41 @@ def train(
         optimizer: str='adam',
     ):
     '''
+    Trains a jigsaw puzzle classifier model on sonar image datasets.
+
+    This function orchestrates the training process of a jigsaw puzzle classifier model on sonar image datasets. 
+    It creates a feature extractor model, a jigsaw puzzle classifier model, and trains the classifier model on the provided training dataset. 
+    The training process involves data preprocessing, model compilation, and model fitting.
+
+    Parameters:
+    - train_image_dirpath (str): The directory path to the training sonar images.
+    - val_image_dirpath (str): The directory path to the validation sonar images.
+    - log_dirpath (str): The directory path to save training logs.
+    - checkpoint_dirpath (str): The directory path to save model checkpoints.
+    - trained_classifier_filepath (str): The file path to save the trained classifier model.
+    - trained_backbone_filepath (str): The file path to save the trained backbone model.
+    - image_width (int): The width of the input sonar images.
+    - image_height (int): The height of the input sonar images.
+    - num_classes (int): The number of classes for classification.
+    - num_cells_x (int): The number of cells in the x-direction of the jigsaw puzzle.
+    - num_cells_y (int): The number of cells in the y-direction of the jigsaw puzzle.
+    - dropout (float): The dropout rate for the classifier model.
+    - batch_size (int): The batch size for training.
+    - patch_height (int): The height of the patch.
+    - patch_width (int): The width of the patch.
+    - crop_range (typing.List[float]): The range of crop sizes for data augmentation.
+    - contrast_range (typing.List[float]): The range of contrast values for data augmentation.
+    - brightness_delta (float): The maximum brightness delta for data augmentation.
+    - preset_model (str): The type of preset model to use for the feature extractor.
+    - shuffle (bool): A flag indicating whether to shuffle the training dataset.
+    - epochs (int): The number of epochs for training.
+    - initial_epoch (int): The initial epoch for training.
+    - seed (int): The seed for random operations.
+    - patience (int): The patience for early stopping.
+    - optimizer (str): The optimizer to use for training.
+
+    Returns:
+    - None: This function does not return any value. It trains the model and saves it to the specified file paths.
     '''
     backbone = create_feature_extractor(
         image_width=patch_width//num_cells_y,
